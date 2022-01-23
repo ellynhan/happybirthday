@@ -24,7 +24,7 @@ export class Controller {
   addTteok(name, message){
     this.age += 1;
     localStorage['age'] = this.age;
-    this.tteoks.push(new Tteok(this.age,name,message,0,0));
+    this.tteoks.push(new Tteok(this.age,name,message,this.age*10,this.age*10));
     localStorage.setItem('tteoks', JSON.stringify(this.tteoks));
   }
 

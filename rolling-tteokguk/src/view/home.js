@@ -15,8 +15,10 @@ export default class Home {
     this.controller = controller;
     this.app = $('#app');
     this.title = P(`광훈이에게 ${localStorage['age']}살의 나이를 멕였습니다.`);
+    // this.title.style.fontSize='1.2em';
     this.soupImage = Image(controller.soup,'500px');
     this.gomyeong = Image('assets/food.png','120px');
+    this.gomyeong.setAttribute('draggable','false');
     this.gomyeong.setAttribute('style',
       `
       position: absolute;
@@ -26,7 +28,7 @@ export default class Home {
       right: 0;
       top: 41%;
       text-align: center;
-      z-index:${101}
+      z-index:${1}
       `
     );
     this.app.append(Div([this.title, this.soupImage,this.gomyeong]));
@@ -95,12 +97,13 @@ export default class Home {
     let tteok = DivById([Image('/assets/tteok.png','100px')],`tteok-${id}`);
     let msgWindow = this.setMessageDialog(id);
 
-    tteok.setAttribute('style', `position:absolute; top:${tteoks[id].top}px; left:${tteoks[id].left}px; z-index:${id+1}`);
-    
+    tteok.setAttribute('style', `position:absolute; top:${10+tteoks[id].top}px; left:${10+tteoks[id].left}px; z-index:${id+1}`);
+
     tteok.addEventListener('mousedown', e =>{
       console.log('mousedown');
       let x = this.controller.tteoks[id].left;
       let y = this.controller.tteoks[id].top;
+      console.log(`${x}, ${y}`);
       tteok.style.left = e.clientX - x;
       tteok.style.top = e.clientY - y;
       this.mouseState = true;
