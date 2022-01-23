@@ -1,6 +1,6 @@
 import { $ } from '../utils/selector.js';
 import Image  from '../component/image.js';
-import DivByName from '../component/divByClass.js';
+import DivById from '../component/divById.js';
 import P from '../component/text.js';
 import Input from '../component/input.js';
 import Textarea from '../component/textarea.js';
@@ -61,12 +61,8 @@ export default class Home {
   }
 
   removeOneTteok(id){
-    let a = document.getElementsByClassName(`tteok-${id}`);
-    let b = document.getElementsByClassName(`msg-${id}`);
-    console.log(a);
-    console.log(b);
-    a.remove();
-    b.remove;
+    document.getElementById(`tteok-${id}`).outerHTML="";
+    document.getElementById(`msg-${id}`).outerHTML="";
   }
 
   setMessageDialog(id){
@@ -79,7 +75,7 @@ export default class Home {
 
   setTteok(id){
     const tteoks = this.controller.tteoks;
-    let tteok = DivByName([Image('/assets/ricecake2.png','100px')],`tteok-${id}`);
+    let tteok = DivById([Image('/assets/ricecake2.png','100px')],`tteok-${id}`);
     let msgWindow = this.setMessageDialog(id);
 
     tteok.setAttribute('style', `position:absolute; top:${tteoks[id].top}px; left:${tteoks[id].left}px; z-index:${id+1}`);

@@ -2,7 +2,7 @@ import Div from "../component/div.js";
 import DivByName from "../component/divByClass.js";
 import P from "../component/text.js";
 
-const MesssageWindow = (name, message, top, left,classname) => {
+const MesssageWindow = (name, message, top, left,id) => {
     let messageWindow = DivByName([], 'message-window');
     messageWindow.setAttribute('style',
     `background-color:gold;
@@ -17,7 +17,7 @@ const MesssageWindow = (name, message, top, left,classname) => {
     padding: 10px;
     word-break: break-all;
     `);
-    messageWindow.setAttribute('class',`msg-${classname}`);
+    messageWindow.setAttribute('id',`msg-${id}`);
     messageWindow.innerText = `${name}\n${message}`
     return messageWindow; 
 }
