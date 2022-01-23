@@ -5,6 +5,7 @@ export class Controller {
     this.age = 0;
     this.tteoks = [];
     this.setup();
+    this.soup = '/assets/soup1.png';
   }
 
   setup(){
@@ -15,6 +16,7 @@ export class Controller {
     if(localStorage.getItem('tteoks') !== null){
       this.age = Number(localStorage['age']);
       this.tteoks = JSON.parse(localStorage['tteoks']);
+      this.moreSoup();
       console.log(this.tteoks);
     }
   }
@@ -47,5 +49,17 @@ export class Controller {
     this.tteoks[id].left = x;
     this.tteoks[id].top = y;
     localStorage.setItem('tteoks', JSON.stringify(this.tteoks));
+  }
+
+  moreSoup(){
+    if(this.age > 5 && this.age <= 10){
+      this.soup = '/assets/soup2.png';
+    }else if(this.age <= 15){
+      this.soup = '/assets/soup3.png';
+    }else if(this.age <= 20){
+      this.soup = '/assets/soup4.png';
+    }else{
+      this.soup = '/assets/soup5.png';
+    }
   }
 }

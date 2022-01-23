@@ -15,7 +15,7 @@ export default class Home {
     this.controller = controller;
     this.app = $('#app');
     this.app.append(Div([P(`광훈이에게 ${localStorage['age']}살의 나이를 멕였습니다.`)]));
-    this.app.append(Div([Image('/assets/soup1.png','500px')]));
+    this.app.append(Div([Image(controller.soup,'500px')]));
     this.nickname = Input('닉네임');
     this.message = Textarea();
     let form = Form([Div([Label('name','닉네임: '),this.nickname]),Div([Label('message','축하 메세지: '), this.message])])
@@ -48,9 +48,8 @@ export default class Home {
     }
   }
 
-  putOneTteok(){
-    const tteoks = this.controller.tteoks;
-    this.setTteok(tteoks.length-1);
+  putOneTteok(id){
+    this.setTteok(id);
   }
 
   removeAllTteoks(){
@@ -96,7 +95,6 @@ export default class Home {
         let y = this.controller.tteoks[id].top;
         this.controller.moved(id,e.clientX - x,e.clientY - y);
         this.mouseState = false;
-        // this.removeTteoks();
         this.removeOneTteok(id);
         this.putOneTteok(id);
       }
