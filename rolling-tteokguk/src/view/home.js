@@ -14,8 +14,9 @@ export default class Home {
   constructor(controller) {
     this.controller = controller;
     this.app = $('#app');
-    this.app.append(Div([P(`광훈이에게 ${localStorage['age']}살의 나이를 멕였습니다.`)]));
-    this.app.append(Div([Image(controller.soup,'500px')]));
+    this.title = P(`광훈이에게 ${localStorage['age']}살의 나이를 멕였습니다.`);
+    this.soupImage = Image(controller.soup,'500px');
+    this.app.append(Div([this.title, this.soupImage]));
     this.nickname = Input('닉네임');
     this.message = Textarea();
     let form = Form([Div([Label('name','닉네임: '),this.nickname]),Div([Label('message','축하 메세지: '), this.message])])
@@ -37,7 +38,7 @@ export default class Home {
     this.buttonImage.addEventListener('click', e => {
       e.preventDefault();
       this.controller.addTteok(this.nickname.value, this.message.value);
-      this.putOneTteok(localStorage['age']);
+      this.putOneTteok(localStorage['age']-1);
     });
   }
 
@@ -50,6 +51,10 @@ export default class Home {
 
   putOneTteok(id){
     this.setTteok(id);
+    this.controller.moreSoup();
+    this.soupImage.setAttribute('src', this.controller.soup);
+    console.log(this.controller.soup);
+    this.title.innerHTML = `광훈이에게 ${localStorage['age']}살의 나이를 멕였습니다.`;
   }
 
   removeAllTteoks(){

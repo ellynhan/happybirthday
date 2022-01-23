@@ -4,8 +4,8 @@ export class Controller {
   constructor() {
     this.age = 0;
     this.tteoks = [];
-    this.setup();
     this.soup = '/assets/soup1.png';
+    this.setup();
   }
 
   setup(){
@@ -52,7 +52,9 @@ export class Controller {
   }
 
   moreSoup(){
-    if(this.age > 5 && this.age <= 10){
+    if(this.age <= 5){
+      this.soup = '/assets/soup1.png';
+    }else if(this.age <= 10){
       this.soup = '/assets/soup2.png';
     }else if(this.age <= 15){
       this.soup = '/assets/soup3.png';
