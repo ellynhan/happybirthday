@@ -20,34 +20,34 @@ export default class Home {
     this.message = Textarea();
     let form = Form([Div([Label('name','닉네임: '),this.nickname]),Div([Label('message','축하 메세지: '), this.message])])
     this.app.append(form);
-    this.button = Button('나이 멕이기');
-    this.dduckDiv = Div([]);
+    this.buttonImage = Div([Image('/assets/button.png','50px')]);
+    this.tteokDiv = Div([]);
 
-    this.app.append(Div([this.button]));
-    this.app.append(this.dduckDiv);
+    this.app.append(Div([this.buttonImage]));
+    this.app.append(this.tteokDiv);
   
     this.buttonHandler(controller);
-    this.putAllRicecakes();
+    this.putAllTteoks();
     this.mouseState = false;
   }
 
   buttonHandler() {
-    this.button.addEventListener('click', e => {
+    this.buttonImage.addEventListener('click', e => {
       e.preventDefault();
-      this.controller.addRicecake(this.nickname.value, this.message.value);
+      this.controller.addTteok(this.nickname.value, this.message.value);
     });
   }
 
-  putAllRicecakes(){
-    const dducks = this.controller.ricecakes;
-    for(let i=0; i<dducks.length; i++){
+  putAllTteoks(){
+    const tteoks = this.controller.tteoks;
+    for(let i=0; i<tteoks.length; i++){
       let image = Div([Image('/assets/ricecake2.png','100px')]);
       let msgWindow = this.setMessageDialog(i);
-      image.setAttribute('style', `position:absolute; top:${dducks[i].top}px; left:${dducks[i].left}px; z-index:${i+1}`);
+      image.setAttribute('style', `position:absolute; top:${tteoks[i].top}px; left:${tteoks[i].left}px; z-index:${i+1}`);
       image.addEventListener('mousedown', e =>{
         console.log('mousedown');
-        let x = this.controller.ricecakes[i].left;
-        let y = this.controller.ricecakes[i].top;
+        let x = this.controller.tteoks[i].left;
+        let y = this.controller.tteoks[i].top;
         image.style.left = e.clientX - x;
         image.style.top = e.clientY - y;
         this.mouseState = true;
@@ -56,15 +56,15 @@ export default class Home {
       
       image.addEventListener('dragend', e =>{
         if(msgWindow.style.display === 'none' && this.mouseState === true){
-          let x = this.controller.ricecakes[i].left;
-          let y = this.controller.ricecakes[i].top;
+          let x = this.controller.tteoks[i].left;
+          let y = this.controller.tteoks[i].top;
           this.controller.moved(i,e.clientX - x,e.clientY - y);
           this.mouseState = false;
-          this.removeRicecakes();
+          this.removeTteoks();
         }
       });
 
-      this.dduckDiv.append(msgWindow);
+      this.tteokDiv.append(msgWindow);
 
       image.addEventListener('click', e =>{
         this.mouseState = false;
@@ -76,22 +76,30 @@ export default class Home {
         console.log('hi');
       });
 
-      this.dduckDiv.append(image);
+      this.tteokDiv.append(image);
     }
   }
 
-  removeRicecakes(){
-    this.dduckDiv.remove();
-    this.dduckDiv = Div([]);
-    this.app.append(this.dduckDiv);
-    this.putAllRicecakes();
+  putOneTteok(){
+    const tteoks = this.controller.tteoks;
+  }
+
+  removeAllTteoks(){
+    this.tteokDiv.remove();
+    this.tteokDiv = Div([]);
+    this.app.append(this.tteokDiv);
+    this.putAllTteoks();
+  }
+
+  removeOneTteok(){
+
   }
 
   setMessageDialog(id){
-    const name = this.controller.ricecakes[id].name;
-    const msg = this.controller.ricecakes[id].message;
-    const top = this.controller.ricecakes[id].top;
-    const left = this.controller.ricecakes[id].left;
+    const name = this.controller.tteoks[id].name;
+    const msg = this.controller.tteoks[id].message;
+    const top = this.controller.tteoks[id].top;
+    const left = this.controller.tteoks[id].left;
     return MesssageWindow(name, msg, top, left);
   }
 }

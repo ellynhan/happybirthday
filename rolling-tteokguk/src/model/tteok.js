@@ -1,4 +1,4 @@
-export default class Ricecake {
+export default class Tteok {
     constructor(id, name, message,left, top) {
       this.id = id;
       this.name = name;

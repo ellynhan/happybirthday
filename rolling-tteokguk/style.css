@@ -1,5 +1,19 @@
 html {
     font-family: 'Dongle', sans-serif;
     font-size: 2em;
+}
+
+#app{
     text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+form{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: flex-end;
 }

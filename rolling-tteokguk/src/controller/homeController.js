@@ -1,9 +1,9 @@
-import Ricecake from "../model/ricecake.js";
+import Tteok from "../model/tteok.js";
 
 export class Controller {
   constructor() {
     this.age = 0;
-    this.ricecakes = [];
+    this.tteoks = [];
     this.setup();
   }
 
@@ -12,18 +12,18 @@ export class Controller {
       localStorage['age'] = 0;
     }
     
-    if(localStorage.getItem('ricecakes') !== null){
+    if(localStorage.getItem('tteoks') !== null){
       this.age = Number(localStorage['age']);
-      this.ricecakes = JSON.parse(localStorage['ricecakes']);
-      console.log(this.ricecakes);
+      this.tteoks = JSON.parse(localStorage['tteoks']);
+      console.log(this.tteoks);
     }
   }
 
-  addRicecake(name, message){
+  addTteok(name, message){
     this.age += 1;
     localStorage['age'] = this.age;
-    this.ricecakes.push(new Ricecake(this.age,name,message,0,0));
-    localStorage.setItem('ricecakes', JSON.stringify(this.ricecakes));
+    this.tteoks.push(new Tteok(this.age,name,message,0,0));
+    localStorage.setItem('tteoks', JSON.stringify(this.tteoks));
   }
 
   showMessageWindow(id){
@@ -39,13 +39,13 @@ export class Controller {
   }
 
   startMove(id, x, y){
-    this.ricecakes[id].left = x;
-    this.ricecakes[id].top = y;
+    this.tteoks[id].left = x;
+    this.tteoks[id].top = y;
   }
 
   moved(id, x, y){
-    this.ricecakes[id].left = x;
-    this.ricecakes[id].top = y;
-    localStorage.setItem('ricecakes', JSON.stringify(this.ricecakes));
+    this.tteoks[id].left = x;
+    this.tteoks[id].top = y;
+    localStorage.setItem('tteoks', JSON.stringify(this.tteoks));
   }
 }
