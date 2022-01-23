@@ -1,6 +1,6 @@
 import { $ } from '../utils/selector.js';
 import Image  from '../component/image.js';
-import Button from '../component/button.js';
+import DivByName from '../component/divByClass.js';
 import P from '../component/text.js';
 import Input from '../component/input.js';
 import Textarea from '../component/textarea.js';
@@ -22,66 +22,35 @@ export default class Home {
     this.app.append(form);
     this.buttonImage = Div([Image('/assets/button.png','50px')]);
     this.tteokDiv = Div([]);
+    this.msgDiv = Div([]);
 
     this.app.append(Div([this.buttonImage]));
-    this.app.append(this.tteokDiv);
+    this.app.append(this.tteokDiv, this.msgDiv);
   
     this.buttonHandler(controller);
     this.putAllTteoks();
     this.mouseState = false;
+    // this.tteoks = this.controller.tteoks;
   }
 
   buttonHandler() {
     this.buttonImage.addEventListener('click', e => {
       e.preventDefault();
       this.controller.addTteok(this.nickname.value, this.message.value);
+      this.putOneTteok(localStorage['age']);
     });
   }
 
   putAllTteoks(){
     const tteoks = this.controller.tteoks;
     for(let i=0; i<tteoks.length; i++){
-      let image = Div([Image('/assets/ricecake2.png','100px')]);
-      let msgWindow = this.setMessageDialog(i);
-      image.setAttribute('style', `position:absolute; top:${tteoks[i].top}px; left:${tteoks[i].left}px; z-index:${i+1}`);
-      image.addEventListener('mousedown', e =>{
-        console.log('mousedown');
-        let x = this.controller.tteoks[i].left;
-        let y = this.controller.tteoks[i].top;
-        image.style.left = e.clientX - x;
-        image.style.top = e.clientY - y;
-        this.mouseState = true;
-        this.controller.startMove(i,e.clientX - x, e.clientY - y);
-      });
-      
-      image.addEventListener('dragend', e =>{
-        if(msgWindow.style.display === 'none' && this.mouseState === true){
-          let x = this.controller.tteoks[i].left;
-          let y = this.controller.tteoks[i].top;
-          this.controller.moved(i,e.clientX - x,e.clientY - y);
-          this.mouseState = false;
-          this.removeTteoks();
-        }
-      });
-
-      this.tteokDiv.append(msgWindow);
-
-      image.addEventListener('click', e =>{
-        this.mouseState = false;
-        if(msgWindow.style.display === 'block'){
-          msgWindow.style.display = 'none'
-        }else{
-          msgWindow.style.display = 'block'
-        }
-        console.log('hi');
-      });
-
-      this.tteokDiv.append(image);
+      this.setTteok(i);
     }
   }
 
   putOneTteok(){
     const tteoks = this.controller.tteoks;
+    this.setTteok(tteoks.length-1);
   }
 
   removeAllTteoks(){
@@ -91,8 +60,13 @@ export default class Home {
     this.putAllTteoks();
   }
 
-  removeOneTteok(){
-
+  removeOneTteok(id){
+    let a = document.getElementsByClassName(`tteok-${id}`);
+    let b = document.getElementsByClassName(`msg-${id}`);
+    console.log(a);
+    console.log(b);
+    a.remove();
+    b.remove;
   }
 
   setMessageDialog(id){
@@ -100,6 +74,48 @@ export default class Home {
     const msg = this.controller.tteoks[id].message;
     const top = this.controller.tteoks[id].top;
     const left = this.controller.tteoks[id].left;
-    return MesssageWindow(name, msg, top, left);
+    return MesssageWindow(name, msg, top, left,id);
+  }
+
+  setTteok(id){
+    const tteoks = this.controller.tteoks;
+    let tteok = DivByName([Image('/assets/ricecake2.png','100px')],`tteok-${id}`);
+    let msgWindow = this.setMessageDialog(id);
+
+    tteok.setAttribute('style', `position:absolute; top:${tteoks[id].top}px; left:${tteoks[id].left}px; z-index:${id+1}`);
+    
+    tteok.addEventListener('mousedown', e =>{
+      console.log('mousedown');
+      let x = this.controller.tteoks[id].left;
+      let y = this.controller.tteoks[id].top;
+      tteok.style.left = e.clientX - x;
+      tteok.style.top = e.clientY - y;
+      this.mouseState = true;
+      this.controller.startMove(id,e.clientX - x, e.clientY - y);
+    });
+    
+    tteok.addEventListener('dragend', e =>{
+      if(msgWindow.style.display === 'none' && this.mouseState === true){
+        let x = this.controller.tteoks[id].left;
+        let y = this.controller.tteoks[id].top;
+        this.controller.moved(id,e.clientX - x,e.clientY - y);
+        this.mouseState = false;
+        // this.removeTteoks();
+        this.removeOneTteok(id);
+        this.putOneTteok(id);
+      }
+    });
+
+    tteok.addEventListener('click', e =>{
+      this.mouseState = false;
+      if(msgWindow.style.display === 'block'){
+        msgWindow.style.display = 'none'
+      }else{
+        msgWindow.style.display = 'block'
+      }
+    });
+
+    this.tteokDiv.append(tteok);
+    this.msgDiv.append(msgWindow);
   }
 }
