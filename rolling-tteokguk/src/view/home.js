@@ -51,8 +51,12 @@ export default class Home {
   buttonHandler() {
     this.buttonImage.addEventListener('click', e => {
       e.preventDefault();
-      this.controller.addTteok(this.nickname.value, this.message.value);
-      this.putOneTteok(localStorage['age']-1);
+      const valid = this.controller.checkValidation(this.nickname.value, this.message.value);
+      if(valid === true){
+        this.controller.addTteok(this.nickname.value, this.message.value);
+        this.putOneTteok(localStorage['age']-1);  
+      } 
+
     });
   }
 

@@ -64,4 +64,16 @@ export class Controller {
       this.soup = '/assets/soup5.png';
     }
   }
+
+  checkValidation(name, message){
+    if(name === undefined || !name.trim()){
+      alert('올바르지 않은 이름입니다.');
+      return false;
+    }
+    if(message === undefined || !message.trim()){
+      alert('올바르지 않은 메세지 입니다.');
+      return false;
+    }
+    return true;
+  }
 }
