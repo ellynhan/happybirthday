@@ -16,7 +16,20 @@ export default class Home {
     this.app = $('#app');
     this.title = P(`광훈이에게 ${localStorage['age']}살의 나이를 멕였습니다.`);
     this.soupImage = Image(controller.soup,'500px');
-    this.app.append(Div([this.title, this.soupImage]));
+    this.gomyeong = Image('assets/food.png','120px');
+    this.gomyeong.setAttribute('style',
+      `
+      position: absolute;
+      margin-left: auto;
+      margin-right: auto;
+      left: 0;
+      right: 0;
+      top: 41%;
+      text-align: center;
+      z-index:${101}
+      `
+    );
+    this.app.append(Div([this.title, this.soupImage,this.gomyeong]));
     this.nickname = Input('닉네임');
     this.message = Textarea();
     let form = Form([Div([Label('name','닉네임: '),this.nickname]),Div([Label('message','축하 메세지: '), this.message])])
@@ -24,7 +37,6 @@ export default class Home {
     this.buttonImage = Div([Image('/assets/button.png','50px')]);
     this.tteokDiv = Div([]);
     this.msgDiv = Div([]);
-
     this.app.append(Div([this.buttonImage]));
     this.app.append(this.tteokDiv, this.msgDiv);
   
@@ -51,9 +63,10 @@ export default class Home {
 
   putOneTteok(id){
     this.setTteok(id);
-    this.controller.moreSoup();
-    this.soupImage.setAttribute('src', this.controller.soup);
-    console.log(this.controller.soup);
+    if(id<22){
+      this.controller.moreSoup();
+      this.soupImage.setAttribute('src', this.controller.soup);
+    }
     this.title.innerHTML = `광훈이에게 ${localStorage['age']}살의 나이를 멕였습니다.`;
   }
 
@@ -79,7 +92,7 @@ export default class Home {
 
   setTteok(id){
     const tteoks = this.controller.tteoks;
-    let tteok = DivById([Image('/assets/ricecake2.png','100px')],`tteok-${id}`);
+    let tteok = DivById([Image('/assets/tteok.png','100px')],`tteok-${id}`);
     let msgWindow = this.setMessageDialog(id);
 
     tteok.setAttribute('style', `position:absolute; top:${tteoks[id].top}px; left:${tteoks[id].left}px; z-index:${id+1}`);
@@ -116,5 +129,19 @@ export default class Home {
 
     this.tteokDiv.append(tteok);
     this.msgDiv.append(msgWindow);
+  }
+
+  setGomyeong(){
+    this.gomyeong.setAttribute('style',
+      `
+      position: absolute;
+      margin-left: auto;
+      margin-right: auto;
+      left: 0;
+      right: 0;
+      text-align: center;
+      z-index:${id+1}
+      `
+    );
   }
 }
