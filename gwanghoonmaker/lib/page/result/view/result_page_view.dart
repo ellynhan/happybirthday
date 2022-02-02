@@ -186,7 +186,7 @@ class ResultPageView extends StatelessWidget {
       return _checkEduResultItem(15);
     }else if(educated.dance>=5 && educated.polite >= 5 && educated.music >= 5){
       return _checkEduResultItem(16);
-    }else if(educated.poem >= 9 && educated.magic >= 6 && educated.study >= 5){
+    }else if(educated.poem >= 5 && educated.magic >= 6 && educated.study >= 5){
       return _checkEduResultItem(17);
     }else{
       return _checkEduResultItem(10);
